@@ -1,0 +1,64 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { db, IngredientWithInfo } from '../../../lib/db';
+
+const id = Astro.params.id;
+let item: IngredientWithInfo | null = null,
+  err = false;
+
+if (!id) err = true;
+else {
+  item = await db.ingredient.findFirst({
+    where: {
+      id: Number(id),
+    },
+    include: {
+      ingredientInfo: true,
+    },
+  });
+}
+
+if (!item) err = true;
+
+let title = `Edit ${item?.ingredientInfo!.name}`;
+
+console.log(title);
+console.log(item);
+---
+
+{
+  !err ? (
+    <Layout title={title}>
+      <div class="mx-20 flex flex-col items-center gap-2">
+        <h1>{title}</h1>
+        <form action="/api/ingredients/edit" method="post" class="flex flex-col items-center gap-2">
+          <input name="id" type="number" value={item.id} hidden />
+          <input name="name" type="text" placeholder="Name" value={item?.ingredientInfo?.name} />
+          <div class="grid grid-cols-2 gap-2">
+            <input name="amount" type="number" placeholder="Amount" value={item?.amount} />
+            <input name="unit" type="text" placeholder="Unit" value={item?.ingredientInfo?.unit} />
+            <input
+              name="calories"
+              type="number"
+              placeholder="Calories"
+              value={item?.ingredientInfo?.calories}
+            />
+            <input
+              name="expr_date"
+              type="date"
+              placeholder="Expiration date"
+              value={item?.expirationDate.toISOString().substring(0, 10)}
+            />
+          </div>
+          <input type="submit" />
+        </form>
+      </div>
+    </Layout>
+  ) : (
+    <Layout title="No ingredient found">
+      <div class="mx-20 flex flex-col items-center gap-2">
+        <div>No ingredient with this ID.</div>
+      </div>
+    </Layout>
+  )
+}
