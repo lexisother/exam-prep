@@ -1,31 +1,31 @@
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "mysql"
-    url      = env("DB_URL")
+  provider = "mysql"
+  url      = env("DB_URL")
 }
 
 model Ingredient {
-    id Int @id @default(autoincrement())
-    amount Int
-    archived Boolean
-    expirationDate DateTime
+  id             Int      @id @default(autoincrement())
+  amount         Int
+  archived       Boolean
+  expirationDate DateTime
 
-    ingredientInfo IngredientInfo?
+  ingredientInfo IngredientInfo?
 
-    @@map("ingredient")
+  @@map("ingredient")
 }
 
 model IngredientInfo {
-    id Int @id @default(autoincrement())
-    name String
-    unit String
-    calories Int
+  id       Int    @id @default(autoincrement())
+  name     String
+  unit     String
+  calories Int
 
-    ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
-    ingredientId Int  @unique
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+  ingredientId Int        @unique
 
-    @@map("ingredientInfo")
+  @@map("ingredientInfo")
 }

@@ -2,6 +2,9 @@
   "name": "truly-one-of-the-projects-of-all-time",
   "type": "module",
   "version": "0.0.1",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "prisma:gen": "prisma generate",
     "migrate:dev": "prisma migrate dev",
@@ -34,6 +37,8 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^3.2.5",
     "prettier-plugin-astro": "^0.13.0",
-    "prettier-plugin-tailwindcss": "^0.5.11"
+    "prettier-plugin-prisma": "^5.0.0",
+    "prettier-plugin-tailwindcss": "^0.5.11",
+    "sass": "^1.71.1"
   }
 }
