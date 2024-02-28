@@ -17,8 +17,9 @@ let items = await db.ingredient.findMany({
         <div class="flex flex-row gap-2 rounded-md border-2 border-solid border-red-400 p-2">
           <div
             id="archive"
-            class="rounded-md border-2 border-solid border-blue-300 p-2"
-            data-id={i.id}>
+            class={`rounded-md border-2 border-solid border-blue-300 p-2 ${i.archived && 'bg-green-300'}`}
+            data-id={i.id}
+            data-archived={i.archived}>
             <Icon name="mdi:archive" />
           </div>
           <div
@@ -34,22 +35,30 @@ let items = await db.ingredient.findMany({
 </div>
 
 <script>
-  for (const el of document.querySelectorAll('#delete')!) {
-    el.addEventListener('click', async function (this: HTMLDivElement) {
-      let res = await (
-        await fetch('/api/ingredients/delete', {
-          method: 'POST',
-          body: JSON.stringify({
-            id: this.dataset.id,
-          }),
-        })
-      ).json();
+  let bindings: Record<string, string> = {
+    '#archive': '/api/ingredients/archive',
+    '#delete': '/api/ingredients/delete',
+  };
 
-      if (res.success) {
-        location.reload();
-      } else {
-        throw new Error(res.error);
-      }
-    });
+  for (const id of Object.keys(bindings)) {
+    for (const el of document.querySelectorAll(id)!) {
+      el.addEventListener('click', async function (this: HTMLDivElement) {
+        let res = await (
+          await fetch(bindings[id]!, {
+            method: 'POST',
+            body: JSON.stringify({
+              id: this.dataset.id,
+              archived: this.dataset.archived,
+            }),
+          })
+        ).json();
+
+        if (res.success) {
+          location.reload();
+        } else {
+          throw new Error(res.error);
+        }
+      });
+    }
   }
 </script>
