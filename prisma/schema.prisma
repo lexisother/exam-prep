@@ -24,7 +24,7 @@ model IngredientInfo {
   unit     String
   calories Int
 
-  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
   ingredientId Int        @unique
 
   RecipeIngredient RecipeIngredient?
