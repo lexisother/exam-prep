@@ -20,7 +20,7 @@ export const POST: APIRoute = async (context) => {
       data: {
         // FUUUUUUUUUCK
         // eslint-disable-next-line no-unneeded-ternary
-        archived: res.archived === undefined ? true : false,
+        archived: !res.archived,
       },
     });
   } catch (e) {
