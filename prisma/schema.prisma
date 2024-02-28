@@ -27,5 +27,32 @@ model IngredientInfo {
   ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
   ingredientId Int        @unique
 
+  RecipeIngredient RecipeIngredient?
+
   @@map("ingredientInfo")
+}
+
+model Recipe {
+  id           Int    @id @default(autoincrement())
+  name         String
+  instructions String
+  time         Int
+  people       Int
+
+  recipeIngredients RecipeIngredient[]
+
+  @@map("recipe")
+}
+
+model RecipeIngredient {
+  id           Int @id @default(autoincrement())
+  amountNeeded Int
+
+  recipe   Recipe @relation(fields: [recipeId], references: [id])
+  recipeId Int    @unique
+
+  info   IngredientInfo @relation(fields: [infoId], references: [id])
+  infoId Int            @unique
+
+  @@map("recipeIngredient")
 }

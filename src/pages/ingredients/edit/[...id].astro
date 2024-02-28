@@ -1,6 +1,6 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
-import { db, IngredientWithInfo } from '../../../lib/db';
+import { db, type IngredientWithInfo } from '../../../lib/db';
 
 const id = Astro.params.id;
 let item: IngredientWithInfo | null = null,
@@ -32,7 +32,7 @@ console.log(item);
       <div class="mx-20 flex flex-col items-center gap-2">
         <h1>{title}</h1>
         <form action="/api/ingredients/edit" method="post" class="flex flex-col items-center gap-2">
-          <input name="id" type="number" value={item.id} hidden />
+          <input name="id" type="number" value={item?.id} hidden />
           <input name="name" type="text" placeholder="Name" value={item?.ingredientInfo?.name} />
           <div class="grid grid-cols-2 gap-2">
             <input name="amount" type="number" placeholder="Amount" value={item?.amount} />
