@@ -18,8 +18,6 @@ export const POST: APIRoute = async (context) => {
         id: Number(res.id),
       },
       data: {
-        // FUUUUUUUUUCK
-        // eslint-disable-next-line no-unneeded-ternary
         archived: !res.archived,
       },
     });
