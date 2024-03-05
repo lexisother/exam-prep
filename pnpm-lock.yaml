@@ -17,6 +17,9 @@ dependencies:
   astro:
     specifier: ^4.4.10
     version: 4.4.10(sass@1.71.1)(typescript@5.3.3)
+  dayjs:
+    specifier: ^1.11.10
+    version: 1.11.10
   prisma:
     specifier: ^5.10.2
     version: 5.10.2
@@ -1990,6 +1993,10 @@ packages:
     dependencies:
       css-tree: 2.2.1
     dev: true
+
+  /dayjs@1.11.10:
+    resolution: {integrity: sha512-vjAczensTgRcqDERK0SR2XMwsF/tSvnvlv6VcF2GIhg6Sx4yOIt/irsr1RDJsKiIyBzJDpCoXiWWq28MqH2cnQ==}
+    dev: false
 
   /debug@4.3.4:
     resolution: {integrity: sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==}
