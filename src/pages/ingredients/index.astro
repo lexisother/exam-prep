@@ -1,4 +1,5 @@
 ---
+import Layout from '../../layouts/Layout.astro';
 import { db } from '../../lib/db';
 import { Icon } from 'astro-icon/components';
 
@@ -9,35 +10,37 @@ let items = await db.ingredient.findMany({
 });
 ---
 
-<div class="flex flex-col items-center gap-2">
-  {
-    items.map((i) => (
-      <div class="flex w-64 flex-row justify-between gap-4 bg-slate-400 p-4">
-        <p class="self-center">{i.ingredientInfo?.name}</p>
-        <div class="flex flex-row gap-2 rounded-md border-2 border-solid border-red-400 p-2">
-          <div
-            class="rounded-md border-2 border-solid border-blue-300 p-2"
-            onclick={`location.href = 'edit/${i.id}'`}>
-            <Icon name="mdi:pencil" />
-          </div>
-          <div
-            id="archive"
-            class={`rounded-md border-2 border-solid border-blue-300 p-2 ${i.archived && 'bg-green-300'}`}
-            data-id={i.id}
-            data-archived={i.archived}>
-            <Icon name="mdi:archive" />
-          </div>
-          <div
-            id="delete"
-            class="rounded-md border-2 border-solid border-blue-300 p-2"
-            data-id={i.id}>
-            <Icon name="mdi:trash" />
+<Layout title="Ingredients">
+  <div class="flex flex-col items-center gap-2">
+    {
+      items.map((i) => (
+        <div class="flex w-64 flex-row justify-between gap-4 bg-slate-400 p-4">
+          <p class="self-center">{i.ingredientInfo?.name}</p>
+          <div class="flex flex-row gap-2 rounded-md border-2 border-solid border-red-400 p-2">
+            <div
+              class="rounded-md border-2 border-solid border-blue-300 p-2"
+              onclick={`location.href = 'edit/${i.id}'`}>
+              <Icon name="mdi:pencil" />
+            </div>
+            <div
+              id="archive"
+              class={`rounded-md border-2 border-solid border-blue-300 p-2 ${i.archived && 'bg-green-300'}`}
+              data-id={i.id}
+              data-archived={i.archived}>
+              <Icon name="mdi:archive" />
+            </div>
+            <div
+              id="delete"
+              class="rounded-md border-2 border-solid border-blue-300 p-2"
+              data-id={i.id}>
+              <Icon name="mdi:trash" />
+            </div>
           </div>
         </div>
-      </div>
-    ))
-  }
-</div>
+      ))
+    }
+  </div>
+</Layout>
 
 <script>
   let bindings: Record<string, string> = {
