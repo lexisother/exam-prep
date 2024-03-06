@@ -10,8 +10,6 @@ interface Data {
 export const POST: APIRoute = async (context) => {
   const res = await json<Data>(context.request);
 
-  console.log(res);
-
   try {
     await db.ingredient.update({
       where: {

@@ -4,18 +4,19 @@ import { db } from '../../../lib/db';
 
 interface Data {
   id: string;
+  read: boolean;
 }
 
 export const POST: APIRoute = async (context) => {
   const res = await json<Data>(context.request);
 
   try {
-    await db.ingredient.delete({
+    await db.notification.update({
       where: {
         id: Number(res.id),
       },
-      include: {
-        ingredientInfo: true,
+      data: {
+        read: !res.read,
       },
     });
   } catch (e) {

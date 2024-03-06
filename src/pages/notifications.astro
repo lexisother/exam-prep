@@ -3,22 +3,85 @@ import Layout from '../layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
 
 const notifs = Astro.locals.notifications;
-console.log(notifs);
+const readNotifs = Astro.locals.readNotifications;
 ---
 
 <Layout title="notifications">
   <div class="flex flex-col items-center gap-2">
-    {
-      notifs.map((n) => (
-        <div class="flex w-64 flex-row justify-between gap-4 bg-slate-400 p-4">
-          <p class="self-center">{n.text}</p>
-          <div class="flex flex-row gap-2 rounded-md border-2 border-solid border-red-400 p-2">
-            <div id="archive" class={`rounded-md border-2 border-solid border-blue-300 p-2`}>
-              <Icon name="mdi:archive" />
+    <div>
+      <h1>Notifications</h1>
+      {
+        notifs.map((n) => (
+          <div class="flex w-[38rem] flex-row justify-between gap-4 bg-slate-400 p-4">
+            <p class="self-center">{n.text}</p>
+            <div class="flex flex-row gap-2 rounded-md border-2 border-solid border-red-400 p-2">
+              <div
+                id="read"
+                class={`rounded-md border-2 border-solid border-blue-300 p-2`}
+                data-id={n.id}
+                data-read={n.read}
+                title="Mark as read">
+                <Icon name="mdi:eye" />
+              </div>
+              <div
+                id="delete"
+                class={`rounded-md border-2 border-solid border-blue-300 p-2`}
+                data-id={n.id}
+                title="Delete">
+                <Icon name="mdi:trash" />
+              </div>
             </div>
           </div>
-        </div>
-      ))
-    }
+        ))
+      }
+    </div>
+    <div>
+      <h1>Read notifications</h1>
+      {
+        readNotifs.map((n) => (
+          <div class="flex w-[38rem] flex-row justify-between gap-4 bg-slate-400 p-4">
+            <p class="self-center">{n.text}</p>
+            <div class="flex flex-row gap-2 rounded-md border-2 border-solid border-red-400 p-2">
+              <div
+                id="delete"
+                class={`rounded-md border-2 border-solid border-blue-300 p-2`}
+                data-id={n.id}
+                title="Delete">
+                <Icon name="mdi:trash" />
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
   </div>
 </Layout>
+
+<script>
+  let bindings: Record<string, string> = {
+    '#read': '/api/notifications/read',
+    '#delete': '/api/notifications/delete',
+  };
+
+  for (const id of Object.keys(bindings)) {
+    for (const el of document.querySelectorAll(id)!) {
+      el.addEventListener('click', async function (this: HTMLDivElement) {
+        let res = await (
+          await fetch(bindings[id]!, {
+            method: 'POST',
+            body: JSON.stringify({
+              id: this.dataset.id,
+              read: this.hasAttribute('data-read'),
+            }),
+          })
+        ).json();
+
+        if (res.success) {
+          location.reload();
+        } else {
+          throw new Error(res.error);
+        }
+      });
+    }
+  }
+</script>

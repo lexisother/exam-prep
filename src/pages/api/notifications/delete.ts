@@ -10,12 +10,9 @@ export const POST: APIRoute = async (context) => {
   const res = await json<Data>(context.request);
 
   try {
-    await db.ingredient.delete({
+    await db.notification.delete({
       where: {
         id: Number(res.id),
-      },
-      include: {
-        ingredientInfo: true,
       },
     });
   } catch (e) {

@@ -9,5 +9,6 @@ interface NotifData {
 namespace App {
   interface Locals {
     notifications: NotifData[];
+    readNotifications: NotifData[];
   }
 }
