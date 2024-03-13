@@ -42,11 +42,13 @@ import Card from '../components/Card.astro';
     <h1 class="text-gradient my-8">Welcome</h1>
     <p class="instructions">...</p>
     <ul role="list" class="link-card-grid">
+      <Card href="/ingredients" title="Ingredient list" body="List all ingredients." />
       <Card
         href="/ingredients/create"
         title="Create ingredient"
         body="Create a new ingredient in the database."
       />
+      <Card href="/notifications" title="Notifications" body="List all notifications." />
     </ul>
   </main>
 </Layout>
