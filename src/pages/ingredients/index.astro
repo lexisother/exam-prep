@@ -19,7 +19,7 @@ let items = await db.ingredient.findMany({
           <div class="flex flex-row gap-2 rounded-md border-2 border-solid border-red-400 p-2">
             <div
               class="rounded-md border-2 border-solid border-blue-300 p-2"
-              onclick={`location.href = 'edit/${i.id}'`}>
+              onclick={`location.href = 'ingredients/edit/${i.id}'`}>
               <Icon name="mdi:pencil" />
             </div>
             <div
