@@ -58,7 +58,7 @@ model RecipeIngredient {
 }
 
 model Notification {
-  id Int @id @default(autoincrement())
+  id   Int     @id @default(autoincrement())
   text String
   read Boolean @default(false)
 
